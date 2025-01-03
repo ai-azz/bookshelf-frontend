@@ -89,6 +89,9 @@ function makeBook(bookObject) {
     const editButton = document.createElement('button');
     editButton.setAttribute('data-testid', 'bookItemEditButton');
     editButton.innerText = 'Edit Buku';
+    editButton.addEventListener('click', function () {
+        editBook(bookObject.id);
+    });
 
     const buttonContainer = document.createElement('div');
     buttonContainer.appendChild(isCompleteButton);
@@ -147,6 +150,43 @@ function removeBook (bookid) {
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData();
 }
+
+function editBook(bookId) {
+    const book = findBook(bookId);
+
+    if (book) {
+        document.getElementById('editBookTitle').value = book.title;
+        document.getElementById('editBookAuthor').value = book.author;
+        document.getElementById('editBookYear').value = book.year;
+
+        const editBookForm = document.getElementById('editBookForm');
+        editBookForm.dataset.bookid = bookId;
+
+        document.getElementById('editBookPopup').style.display = 'flex';
+    }
+}
+
+document.getElementById('cancelEditButton').addEventListener('click', function (){
+    document.getElementById('editBookPopup').style.display = 'none';
+});
+
+document.getElementById('editBookForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const bookId = parseInt(event.target.dataset.bookid);
+    const book = findBook(bookId);
+
+    if (book) {
+        book.title = document.getElementById('editBookTitle').value.trim();
+        book.author = document.getElementById('editBookAuthor').value.trim();
+        book.year = document.getElementById('editBookYear').value;
+
+        document.dispatchEvent(new Event(RENDER_EVENT));
+        saveData();
+
+        document.getElementById('editBookPopup').style.display = 'none';
+    }
+});
 
 function findBook (bookId) {
     for (const bookItem of books) {

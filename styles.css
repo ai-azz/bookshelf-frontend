@@ -179,4 +179,79 @@ button:hover {
 .toast.hide {
     opacity: 0;
     transform: translateY(20px);
-}  
+}
+
+
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+  
+
+.popup-content {
+    background: #fcfbf5;
+    color: #4a3f35;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content h2 {
+    margin-top: 0;
+    text-align: center;
+    font-size: 1.75rem;
+    color: #6d5a4a;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #c9a87c;
+    padding-bottom: 0.5rem;
+}
+
+.popup-content form div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+  
+.popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+  
+.popup-actions button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+#saveEditButton {
+    background-color: #d4c29b; 
+    color: #4a3f35;
+}
+
+#saveEditButton:hover {
+    background-color: #c9a87c; 
+}
+  
+#cancelEditButton {
+    background-color: #c9a87c; 
+    color: #4a3f35;
+}
+
+#cancelEditButton:hover {
+    background-color: #ae8d61;
+}

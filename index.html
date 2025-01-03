@@ -67,6 +67,30 @@
 
         </div>
       </section>
+
+      <div id="editBookPopup" class="popup">
+        <div class="popup-content">
+          <h2>✏️ Edit Buku</h2>
+          <form id="editBookForm">
+            <div>
+              <label for="editBookTitle">Judul</label>
+              <input id="editBookTitle" type="text" required />
+            </div>
+            <div>
+              <label for="editBookAuthor">Penulis</label>
+              <input id="editBookAuthor" type="text" required />
+            </div>
+            <div>
+              <label for="editBookYear">Tahun</label>
+              <input id="editBookYear" type="number" required />
+            </div>
+            <div class="popup-actions">
+              <button type="submit" id="saveEditButton">Simpan Perubahan</button>
+              <button type="button" id="cancelEditButton">Batal</button>
+            </div>
+          </form>
+        </div>
+      </div>          
     </main>
   </body>
 </html>
