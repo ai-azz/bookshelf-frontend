@@ -219,3 +219,32 @@ function showToast(message) {
         }
     })
 }
+
+document.getElementById('searchBook').addEventListener('submit', function (event) {
+    event.preventDefault();
+    searchBook();
+});
+
+function searchBook() {
+    const searchTitle = document.getElementById('searchBookTitle').value.trim().toLowerCase();
+    const filteredBooks = books.filter(book => book.title.toLowerCase().includes(searchTitle));
+
+    renderFilteredBooks(filteredBooks);
+}
+
+function renderFilteredBooks(filteredBooks) {
+    const bookUnread = document.getElementById('incompleteBookList');
+    const bookRead = document.getElementById('completeBookList');
+
+    bookUnread.innerHTML = '';
+    bookRead.innerHTML = '';
+
+    for (const bookItem of filteredBooks) {
+        const bookElement = makeBook(bookItem);
+        if (!bookItem.isCompleted) {
+            bookUnread.appendChild(bookElement);
+        } else {
+            bookRead.appendChild(bookElement);
+        }
+    }
+}
