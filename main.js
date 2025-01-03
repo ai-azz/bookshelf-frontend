@@ -1,5 +1,7 @@
 const books = [];
 const RENDER_EVENT = 'render-book';
+const SAVED_EVENT = 'saved-book';
+const STORAGE_KEY = 'BOOKSHELF-APPS'
 
 document.addEventListener('DOMContentLoaded', function () {
     const submitForm = document.getElementById('bookForm');
@@ -14,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function () {
             yearInput.value = yearInput.value.slice(0, 4);
         }
     });
+
+    if (isStorageExist()) {
+        loadDataFromStorage();
+    }
 });
 
 function addBook() {
@@ -28,6 +34,7 @@ function addBook() {
 
     document.dispatchEvent(new Event(RENDER_EVENT));
     document.getElementById('bookForm').reset();
+    saveData();
 }
 
 function generateId() {
@@ -118,6 +125,7 @@ function addBookToRead (bookId) {
 
     bookTarget.isCompleted = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
 }
 
 function addBookToUnread (bookId) {
@@ -127,6 +135,7 @@ function addBookToUnread (bookId) {
 
     bookTarget.isCompleted = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
 }
 
 function removeBook (bookid) {
@@ -136,6 +145,7 @@ function removeBook (bookid) {
 
     books.splice(bookIndex, 1);
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
 }
 
 function findBook (bookId) {
@@ -156,4 +166,37 @@ function findBookIndex (bookId) {
     }
 
     return -1;
+}
+
+function saveData() {
+    if (isStorageExist()) {
+        const parsed = JSON.stringify(books);
+        localStorage.setItem(STORAGE_KEY, parsed),
+        document.dispatchEvent(new Event(SAVED_EVENT));
+    }
+}
+
+function isStorageExist() {
+    if (typeof (Storage) === undefined) {
+        alert('Browser kamu tidak mendukung local storage');
+        return false;
+    }
+    return true;
+}
+
+document.addEventListener(SAVED_EVENT, function() {
+    console.log(localStorage.getItem(STORAGE_KEY));
+});
+
+function loadDataFromStorage() {
+    const serializedData = localStorage.getItem(STORAGE_KEY);
+    let data = JSON.parse(serializedData);
+
+    if (data !== null) {
+        for (const book of data) {
+            books.push(book);
+        }
+    }
+
+    document.dispatchEvent(new Event(RENDER_EVENT));
 }
